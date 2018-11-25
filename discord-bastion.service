@@ -1,0 +1,22 @@
+[Unit]
+Description=BastionBot for Discord.JS
+Wants=local-fs.target network.target
+After=local-fs.target network.target
+
+[Service]
+ExecStart=/usr/bin/node --max-old-space-size=128 --expose-gc /home/vitaly/_Bots/bastionbot-js/bastion.js
+WorkingDirectory=/home/vitaly/_Bots/bastionbot-js
+Type=notify
+KillMode=process
+WatchdogSec=5
+Restart=on-failure
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=discord-bastion
+User=vitaly
+Group=vitaly
+Environment=NODE_ENV=BastionBot
+
+[Install]
+WantedBy=multi-user.target
