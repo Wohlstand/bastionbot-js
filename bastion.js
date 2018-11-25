@@ -42,13 +42,20 @@ function msgSendError(error, message)
     }
 }
 
+function getRandomInt(min, max)
+{
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function getArrayRandom(array)
 {
     if (array == null)
         return {index: null, value: null};
     else
     {
-        let id = Math.floor(Math.random() * (array.length));
+        let id = getRandomInt(0, array.length - 1);
         let val = array[id];
         return {index: id, value: val};
     }
