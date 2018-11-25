@@ -2,7 +2,7 @@
     "name": "bastionbot",
     "version": "1.0.0",
     "description": "BastionBot",
-    "main": "minnie.js.js",
+    "main": "bastion.js",
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
