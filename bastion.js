@@ -80,11 +80,12 @@ client.on("message", msg =>
 
         let content = msg.content;
         let count = (content.match(/bastion/ig) || []).length;
+        let forMe = msg.isMentioned(client.user);
 
-        if (count > 0)
+        if (count > 0 || forMe)
             console.log("Message: [" + content + "], contains " + count + " of 'bastion'");
 
-        if (count > 0 && count < 5)
+        if ((count > 0 && count < 5) || forMe)
         {
             let k = getArrayRandom(phrazes.bastion);
             if (k.value)
