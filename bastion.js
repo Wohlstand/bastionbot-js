@@ -18,7 +18,7 @@ let homeChannelId = mConfig.homeChannel;
 let homeGuildId = mConfig.homeGuild;
 
 // Other stuff
-let phrazes = JSON.parse(fs.readFileSync("phrazes.json", "utf8"));
+let phrases = JSON.parse(fs.readFileSync("phrases.json", "utf8"));
 
 let msgFailedAttempts = 0;
 
@@ -31,7 +31,7 @@ function msgSendError(error, message)
         console.log(ErrorText);
         if (++msgFailedAttempts > 2)
         {
-            console.log("Trying to relogin...");
+            console.log("Trying to re-login...");
             client.login(loginId).catch(msgSendError);
             msgFailedAttempts = 0;
         }
@@ -86,23 +86,39 @@ client.on("message", msg =>
             return;
 
         let content = msg.content;
-        let count = (content.match(/bastion/ig) || []).length;
+        let count = (content.match(/ba+s+t+i+o+n/ig) || []).length;
         let forMe = msg.isMentioned(client.user);
+        let userName = msg.author ? msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ")" : "someone";
 
-        if (count > 0 || forMe)
-            console.log("Message: [" + content + "], contains " + count + " of 'bastion'");
+        if(forMe)
+            count++;
 
-        if ((count > 0 && count < 5) || forMe)
+        if (count > 0)
         {
-            let k = getArrayRandom(phrazes.bastion);
+            console.log("Message: [" + content + "], contains " + count + " of 'bastion'");
+            console.log("Responding to: " + userName + ":" + content);
+        }
+
+        if (count > 4)
+        {
+            console.log("With PLAY OF THE GAME.");
+            let k = getArrayRandom(phrases.fiveBastion);
             if (k.value)
                 sendMsg(msg.channel, k.value);
         }
-        else if (count >= 5)
+        else if (count > 0)
         {
-            let k = getArrayRandom(phrazes.fiveBastion);
-            if (k.value)
-                sendMsg(msg.channel, k.value);
+            let st = "";
+            for(let i = 0; i < count; i++)
+            {
+                if(i > 0)
+                    st += " ";
+                let k = getArrayRandom(phrases.bastion);
+                if(k.value)
+                    st += k.value;
+            }
+            console.log("With message: " + st);
+            sendMsg(msg.channel, st);
         }
     }
     catch (err)
