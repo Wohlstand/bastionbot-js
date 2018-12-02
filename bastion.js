@@ -86,12 +86,15 @@ client.on("message", msg =>
             return;
 
         let content = msg.content;
-        let count = (content.match(/ba+s+t+i+o+n/ig) || []).length;
+        let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');
+        let count = (contentClean.match(/ba+s+t+i+o+n/ig) || []).length;
         let forMe = msg.isMentioned(client.user);
         let userName = msg.author ? msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ")" : "someone";
 
         if(forMe)
             count++;
+
+        // console.log("Clean message: " + contentClean);
 
         if (count > 0)
         {
