@@ -79,11 +79,13 @@ client.on("message", msg =>
     try
     {
         if (!msg.guild || !msg.channel)
-            return;
+            return; //Ignore direct messages
         if (msg.guild && msg.guild.id !== homeGuildId)
-            return;
+            return; //Don't work out of home guild
         if (msg.channel && msg.channel.id !== homeChannelId)
-            return;
+            return; //Don't work out of home channel
+        if (msg.author && msg.author.id === client.user.id)
+            return; //Don't try to deal with self
 
         let content = msg.content;
         let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');
@@ -91,7 +93,7 @@ client.on("message", msg =>
         let forMe = msg.isMentioned(client.user);
         let userName = msg.author ? msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ")" : "someone";
 
-        if(forMe)
+        if (forMe)
             count++;
 
         // console.log("Clean message: " + contentClean);
@@ -112,12 +114,12 @@ client.on("message", msg =>
         else if (count > 0)
         {
             let st = "";
-            for(let i = 0; i < count; i++)
+            for (let i = 0; i < count; i++)
             {
-                if(i > 0)
+                if (i > 0)
                     st += " ";
                 let k = getArrayRandom(phrases.bastion);
-                if(k.value)
+                if (k.value)
                     st += k.value;
             }
             console.log("With message: " + st);
