@@ -90,7 +90,7 @@ client.on("message", msg =>
         let content = msg.content;
         let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');
         let count = (contentClean.match(/ba+s+t+i+o+n/ig) || []).length;
-        let forMe = msg.isMentioned(client.user);
+        let forMe = msg.mentions.has(client.user);
         let userName = msg.author ? msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ")" : "someone";
 
         if (forMe)
@@ -144,7 +144,7 @@ client.on('ready', () =>
 
     client.user.setStatus("online").catch(msgSendError);
     client.user.setActivity("").catch(msgSendError);
-    let myGuild = client.guilds.get(homeGuildId);
+    let myGuild = client.guilds.resolve(homeGuildId);
     if (!myGuild)
     {
         let perms = 130112;
@@ -153,7 +153,7 @@ client.on('ready', () =>
         return;
     }
 
-    let myChannel = myGuild.channels.get(homeChannelId);
+    let myChannel = myGuild.channels.resolve(homeChannelId);
     if (!myChannel)
     {
         console.log("I don't know this channel! IT'S NOSENSE!");
