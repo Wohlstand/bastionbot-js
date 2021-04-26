@@ -14,8 +14,7 @@ if (process.platform === 'linux')
 let mConfig = JSON.parse(fs.readFileSync("config.json", "utf8"));
 
 let loginId = mConfig.loginId;
-let homeChannelId = mConfig.homeChannel;
-let homeGuildId = mConfig.homeGuild;
+let homeGuildChan = mConfig.homeGuildChannels;
 
 // Other stuff
 let phrases = JSON.parse(fs.readFileSync("phrases.json", "utf8"));
@@ -78,14 +77,27 @@ client.on("message", msg =>
 {
     try
     {
+        let forThisServer = false;
+
         if (!msg.guild || !msg.channel)
             return; //Ignore direct messages
-        if (msg.guild && msg.guild.id !== homeGuildId)
-            return; //Don't work out of home guild
-        if (msg.channel && msg.channel.id !== homeChannelId)
-            return; //Don't work out of home channel
+
+        // if (msg.guild && msg.guild.id !== homeGuildId)
+        //     return; //Don't work out of home guild
+        // if (msg.channel && msg.channel.id !== homeChannelId)
+        //     return; //Don't work out of home channel
+
         if (msg.author && msg.author.id === client.user.id)
             return; //Don't try to deal with self
+
+        homeGuildChan.forEach(function(val, idx, array)
+        {
+            if (msg.guild.id === val.guild && msg.channel.id === val.channel)
+                forThisServer = true;
+        });
+
+        if (!forThisServer)
+            return;
 
         let content = msg.content;
         let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');

@@ -1,6 +1,11 @@
 {
     "ownerIds"        : [<strings array of admins>],
-    "homeGuild"       : "<guild ID of home>",
-    "homeChannel"     : "<channel ID of home>",
+    "homeGuildChannels"  :
+    [
+        {
+            "guild": <guild ID of home>,
+            "channel": <channel ID of home>
+        }
+    ],
     "loginId"         : "<auth token>"
 }
