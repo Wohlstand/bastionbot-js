@@ -82,24 +82,19 @@ client.on("message", msg =>
         if (!msg.guild || !msg.channel)
             return; // Ignore direct messages
 
-        // if (msg.guild && msg.guild.id !== homeGuildId)
-        //     return; //Don't work out of home guild
-        // if (msg.channel && msg.channel.id !== homeChannelId)
-        //     return; //Don't work out of home channel
-
         if (msg.author && msg.author.id === client.user.id)
             return; // Don't try to deal with self
 
         homeGuildChan.forEach(function(val, idx, array)
         {
-            console.log("Check id=" + val.guild + " to guild=" + msg.guild.id + " and channel=" + msg.channel.id);
+            // console.log("Check id=" + val.guild + " to guild=" + msg.guild.id + " and channel=" + msg.channel.id);
             if (msg.guild.id === val.guild && msg.channel.id === val.channel)
                 forThisServer = true;
         });
 
         if (!forThisServer)
         {
-            console.log("Came message not for this server [" + msg.content + "]");
+            // console.log("Came message not for this server [" + msg.content + "]");
             return;
         }
 
@@ -112,7 +107,7 @@ client.on("message", msg =>
         if (forMe)
             count++;
 
-        console.log("Clean message: " + contentClean + ", and just mesage: " + content);
+        // console.log("Clean message: " + contentClean + ", and just mesage: " + content);
 
         if (count > 0)
         {
@@ -176,12 +171,12 @@ client.on('ready', () =>
                 return;
             }
         }
-        console.log("Check id=" + val.guild + ", result=" + result);
+        // console.log("Check id=" + val.guild + ", result=" + result);
     });
 
     if (!forThisServer)
     {
-        let perms = 130112;
+        let perms = 274878024768;
         let url = "https://discordapp.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=" + perms;
         console.log("I'm not at the server!!! INVITE ME PLEASE!!! (Then, restart)\n" + url);
         return;
