@@ -146,6 +146,8 @@ client.on("message", msg =>
 
 client.on('ready', () =>
 {
+    let forThisServer = false;
+
     if (process.platform === 'linux')
     {
         notify.ready();
@@ -156,8 +158,16 @@ client.on('ready', () =>
 
     client.user.setStatus("online").catch(msgSendError);
     client.user.setActivity("").catch(msgSendError);
-    let myGuild = client.guilds.resolve(homeGuildId);
-    if (!myGuild)
+
+    homeGuildChan.forEach(function(val, idx, array)
+    {
+        let result = client.guilds.resolve(val.guild);
+        if(result)
+            forThisServer = true;
+        console.log("Check id=" + val.guild + ", result=" + result);
+    });
+
+    if (!forThisServer)
     {
         let perms = 130112;
         let url = "https://discordapp.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=" + perms;
