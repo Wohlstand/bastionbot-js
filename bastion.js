@@ -97,7 +97,10 @@ client.on("message", msg =>
         });
 
         if (!forThisServer)
+        {
+            console.log("Came message not for this server [" + msg.content + "]");
             return;
+        }
 
         let content = msg.content;
         let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');
