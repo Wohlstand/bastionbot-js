@@ -112,7 +112,7 @@ client.on("message", msg =>
         if (forMe)
             count++;
 
-        console.log("Clean message: " + contentClean);
+        console.log("Clean message: " + contentClean + ", and just mesage: " + content);
 
         if (count > 0)
         {
