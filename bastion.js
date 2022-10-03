@@ -93,7 +93,7 @@ client.on("message", msg =>
         homeGuildChan.forEach(function(val, idx, array)
         {
             console.log("Check id=" + val.guild);
-            if (msg.guild.id === val.guild && msg.channel.id === val.channel)
+            if (msg.guildId === val.guild && msg.channelId === val.channel)
                 forThisServer = true;
         });
 
