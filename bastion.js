@@ -92,7 +92,7 @@ client.on("message", msg =>
 
         homeGuildChan.forEach(function(val, idx, array)
         {
-            console.log("Check id=" + val.guild + "to guild=" + msg.guild.id + " and channel=" + msg.channel.id);
+            console.log("Check id=" + val.guild + " to guild=" + msg.guild.id + " and channel=" + msg.channel.id);
             if (msg.guild.id === val.guild && msg.channel.id === val.channel)
                 forThisServer = true;
         });
@@ -112,7 +112,7 @@ client.on("message", msg =>
         if (forMe)
             count++;
 
-        // console.log("Clean message: " + contentClean);
+        console.log("Clean message: " + contentClean);
 
         if (count > 0)
         {
