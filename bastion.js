@@ -100,7 +100,8 @@ client.on("message", msg =>
 
         let content = msg.content;
         let contentClean = content.toLowerCase().replace(/[*,_~]/gi, '');
-        let count = (contentClean.match(/ba+s+t+i+o+n/ig) || []).length;
+        // let count = (contentClean.match(/ba+s+t+i+o+n/ig) || []).length;
+        let count = (contentClean.match(/da+n+c+e/ig) || []).length;
         let forMe = msg.mentions.has(client.user);
         let userName = msg.author ? msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ")" : "someone";
 
@@ -111,13 +112,13 @@ client.on("message", msg =>
 
         if (count > 0)
         {
-            console.log("Message: [" + content + "], contains " + count + " of 'bastion'");
+            console.log("Message: [" + content + "], contains " + count + " of 'dance'");
             console.log("Responding to: " + userName + ":" + content);
         }
 
         if (count > 4)
         {
-            console.log("With PLAY OF THE GAME.");
+            console.log("Activate The Dancebot ♪");
             let k = getArrayRandom(phrases.fiveBastion);
             if (k.value)
                 sendMsg(msg.channel, k.value);
@@ -182,7 +183,7 @@ client.on('ready', () =>
         return;
     }
 
-    console.log('Bastion is READY!');
+    console.log('DanceBot is READY!');
     console.log(' ');
 });
 
