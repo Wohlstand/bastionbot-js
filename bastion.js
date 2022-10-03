@@ -163,7 +163,15 @@ client.on('ready', () =>
     {
         let result = client.guilds.resolve(val.guild);
         if(result)
+        {
             forThisServer = true;
+            let myChannel = myGuild.channels.resolve(val.channel);
+            if (!myChannel)
+            {
+                console.log("I don't know this channel (id=" + val.channel + ", guild=" + val.guild + ")! IT'S NOSENSE!");
+                return;
+            }
+        }
         console.log("Check id=" + val.guild + ", result=" + result);
     });
 
@@ -172,13 +180,6 @@ client.on('ready', () =>
         let perms = 130112;
         let url = "https://discordapp.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=" + perms;
         console.log("I'm not at the server!!! INVITE ME PLEASE!!! (Then, restart)\n" + url);
-        return;
-    }
-
-    let myChannel = myGuild.channels.resolve(homeChannelId);
-    if (!myChannel)
-    {
-        console.log("I don't know this channel! IT'S NOSENSE!");
         return;
     }
 
