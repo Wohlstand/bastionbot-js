@@ -165,7 +165,7 @@ client.on('ready', () =>
         if(result)
         {
             forThisServer = true;
-            let myChannel = myGuild.channels.resolve(val.channel);
+            let myChannel = result.channels.resolve(val.channel);
             if (!myChannel)
             {
                 console.log("I don't know this channel (id=" + val.channel + ", guild=" + val.guild + ")! IT'S NOSENSE!");
