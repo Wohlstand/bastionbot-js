@@ -80,7 +80,7 @@ client.on("message", msg =>
         let forThisServer = false;
 
         if (!msg.guild || !msg.channel)
-            return; //Ignore direct messages
+            return; // Ignore direct messages
 
         // if (msg.guild && msg.guild.id !== homeGuildId)
         //     return; //Don't work out of home guild
@@ -88,10 +88,11 @@ client.on("message", msg =>
         //     return; //Don't work out of home channel
 
         if (msg.author && msg.author.id === client.user.id)
-            return; //Don't try to deal with self
+            return; // Don't try to deal with self
 
         homeGuildChan.forEach(function(val, idx, array)
         {
+            console.log("Check id=" + val.guild);
             if (msg.guild.id === val.guild && msg.channel.id === val.channel)
                 forThisServer = true;
         });
