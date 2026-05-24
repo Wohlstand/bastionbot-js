@@ -86,6 +86,36 @@ function sendMsg(channel, msg)
     }, msg.length * 15)
 }
 
+function closeBot()
+{
+    client.user.setStatus("dnd");
+    client.user.setActivity("Shuting down...");
+    setTimeout(function ()
+    {
+        console.log("Sent \"Away\" status!");
+        setTimeout(function ()
+        {
+            client.destroy();
+            setTimeout(function ()
+            {
+                process.exit();
+            }, 2000);
+        }, 1000);
+    }, 1000);
+}
+
+process.on('SIGINT', function()
+{
+    console.log("\n\nCaught interrupt signal\n");
+    closeBot();
+});
+
+process.on('SIGHUP', function()
+{
+    console.log("\n\nCaught SIGHUP signal\n");
+    closeBot();
+});
+
 client.on("messageCreate", msg =>
 {
     try
