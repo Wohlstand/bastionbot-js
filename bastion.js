@@ -240,6 +240,11 @@ client.on('reconnecting', () =>
     console.log('Connection lost, trying to reconnect...');
 });
 
+client.on('debug', (info) =>
+{
+    console.log('DEBUG: ' + info);
+});
+
 client.login(loginId).catch(msgSendError);
 
 setInterval(function ()
