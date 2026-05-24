@@ -1,5 +1,19 @@
-﻿let Discord = require("discord.js");
-let client = new Discord.Client();
+﻿const Discord = require("discord.js");
+const GatewayIntentBits = Discord.GatewayIntentBits;
+const Partials = Discord.Partials;
+let client = new Discord.Client(
+{
+    intents:
+    [
+        GatewayIntentBits.Guilds, // for guild related things
+        GatewayIntentBits.GuildMessages, // for guild messages things
+        GatewayIntentBits.GuildMessageTyping, // for message typing things
+        GatewayIntentBits.DirectMessages, // for dm messages
+        GatewayIntentBits.DirectMessageTyping, // for dm message typing
+        GatewayIntentBits.MessageContent, // enable if you need message content things
+    ],
+    'partials': [Partials.Channel]
+});
 const fs = require("fs");
 
 // WatchDog for SystemD
@@ -62,18 +76,17 @@ function getArrayRandom(array)
 
 function sendMsg(channel, msg)
 {
-    channel.startTyping();
+    channel.sendTyping();
     setTimeout(function ()
     {
-        channel.stopTyping();
         setTimeout(function ()
         {
-            channel.send(msg).catch(msgSendError);
+            channel.send(msg).then(function(){}, msgSendError).catch(msgSendError);
         }, 300);
     }, msg.length * 15)
 }
 
-client.on("message", msg =>
+client.on("messageCreate", msg =>
 {
     try
     {
@@ -144,7 +157,7 @@ client.on("message", msg =>
     }
 });
 
-client.on('ready', () =>
+client.on('clientReady', () =>
 {
     let forThisServer = false;
 
@@ -156,8 +169,8 @@ client.on('ready', () =>
         notify.startWatchdogMode(watchdogInterval);
     }
 
-    client.user.setStatus("online").catch(msgSendError);
-    client.user.setActivity("").catch(msgSendError);
+    client.user.setStatus("online");
+    client.user.setActivity("");
 
     homeGuildChan.forEach(function(val, idx, array)
     {
@@ -169,7 +182,7 @@ client.on('ready', () =>
             if (!myChannel)
             {
                 console.log("I don't know this channel (id=" + val.channel + ", guild=" + val.guild + ")! IT'S NOSENSE!");
-                return;
+                // return;
             }
         }
         // console.log("Check id=" + val.guild + ", result=" + result);
@@ -185,6 +198,16 @@ client.on('ready', () =>
 
     console.log('DanceBot is READY!');
     console.log(' ');
+});
+
+client.on("error", (e) =>
+{
+    console.log('!!HOLY COW!!\n' + e.message + '\n==========================================================\n\n');
+});
+
+client.on('reconnecting', () =>
+{
+    console.log('Connection lost, trying to reconnect...');
 });
 
 client.login(loginId).catch(msgSendError);

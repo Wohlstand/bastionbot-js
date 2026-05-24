@@ -6,9 +6,9 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "discord.js": "^12.5.3",
+        "discord.js": "^14.26.4",
         "sd-notify": "^2.8.0",
-        "uws": "^100.0.1"
+        "uws": "^200.0.0"
     },
     "repository": {
         "type": "git",
