@@ -242,6 +242,9 @@ client.on('reconnecting', () =>
 
 client.on('debug', (info) =>
 {
+    if(info.startsWith("[WS => Shard 0] Heartbeat acknowledged"))
+        return; // Don't print heartbeat messages
+
     console.log('DEBUG: ' + info);
 });
 
